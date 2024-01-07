@@ -3,6 +3,7 @@ import torch
 from torch import nn
 import typing
 import cv2
+import torchvision.models 
 
 def compute_gradient(model: nn.Module, img: torch.Tensor, loss: typing.Callable, target: int):
     """
@@ -48,22 +49,3 @@ def integrated_gradients(
     norm_grads = [normalize_gradient(grad, percentile=0.98) for grad in grads[:-1]]
     int_grads = (input_img - baseline) * torch.cat(norm_grads[:-1]).mean(axis=0, keepdim=True)
     return int_grads.squeeze(0).permute(1, 2, 0)
-
-import matplotlib.pyplot as plt
-import torchvision.models 
-
-img = cv2.imread("../test_input_2.jpeg", cv2.IMREAD_UNCHANGED).astype(numpy.uint8)
-model = torchvision.models.resnet18(pretrained=True)
-model.eval()
-
-grads = integrated_gradients(
-    network=model,
-    input_img=img, 
-    actual_label=1, 
-    loss_function=nn.CrossEntropyLoss(), 
-    n_steps=100,
-    baseline_type='black',
-)
-
-def application_string(self, remote_container: str, options: typing.Dict[str, int]):
-    pass

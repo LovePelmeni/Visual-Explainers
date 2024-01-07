@@ -4,7 +4,7 @@ from torch import nn
 import torch 
 import matplotlib.pyplot as plt
 from torchvision import models
-import typing
+
 
 class GradCAM(object):
     
@@ -123,26 +123,3 @@ class GradCAM(object):
         
         self._remove_hooks()
         return resized_cam
-
-def test_cam():
-
-    input_img = cv2.imread("./test_cat_dog_img.jpeg", 1)
-    input_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2RGB)
-    input_img = cv2.resize(input_img, dsize=(512, 512), interpolation=cv2.INTER_CUBIC)
-    
-    network = models.resnet50(pretrained=True)
-
-    cam = GradCAM()
-
-    cam_mask = cam.compute_grad_cam(
-        network=network,
-        input_img=input_img,
-        target_label=281,
-    )
-    
-    print(cam_mask)
-
-    # visualizing computed grad-based CAM mask
-    cam.visualize_grad_cam_map(actual_img=input_img, cam_map=cam_mask)
-
-test_cam()

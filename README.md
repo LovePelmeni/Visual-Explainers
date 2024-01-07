@@ -1,4 +1,4 @@
-Collection of visualization explanatory methods for Convolutional Neural Networks (CNN) and it's variations.
+# Collection of visualization explanatory methods for Convolutional Neural Networks (CNN) and it's variations.
 
 Typically includes implementations of following popular techniques:
 
